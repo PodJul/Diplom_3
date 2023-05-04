@@ -7,7 +7,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class LogInPageStellarBurgers {
     private WebDriver driver;
     // текст "Вход"
-    private final By logInText = By.xpath(".//*[text()='Вход']");
+    private final By logInText = By.xpath(".//main/div/h2");
     // поле с email
     private final By emailField = By.xpath(".//*[@type='text']");
     // поле с password
@@ -24,7 +24,7 @@ public class LogInPageStellarBurgers {
     }
 
     public void waitForLoadLogInPage() {
-        new WebDriverWait(driver, 10).until(driver -> driver.findElement(logInText).isDisplayed());
+        new WebDriverWait(driver, 15).until(driver -> driver.findElement(logInText).isDisplayed());
     }
     public void clickRegisterLink() {
         driver.findElement(registerLink).click();

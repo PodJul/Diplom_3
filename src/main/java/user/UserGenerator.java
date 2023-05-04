@@ -17,7 +17,7 @@ public class UserGenerator {
     public String fakeUserPasswordZero(){
         return faker.internet().password(0,1);}
     public String fakeUserPasswordLessSix(){
-        return faker.internet().password(0,6);}
+        return faker.internet().password(1,5);}
     public String fakeUserName(){
         return faker.letterify("?????");}
 }

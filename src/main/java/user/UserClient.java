@@ -1,46 +1,35 @@
 package user;
 
 import io.qameta.allure.Step;
-import org.apache.http.HttpStatus;
+import io.restassured.response.Response;
 import static io.restassured.RestAssured.given;
 
 public class UserClient {
     String baseURL ="https://stellarburgers.nomoreparties.site";
-    String token;
+
     @Step("Send POST request to /api/auth/register and check statusCode")
-    public void createUserAndCheckStatusCode(User user) {
-
-        given()
+    public Response createUserAPI(User user) {
+          return given()
                 .baseUri(baseURL)
                 .header("Content-type", "application/json")
                 .body(user)
                 .when()
-                .post("api/auth/register")
-                .then()
-                .statusCode(HttpStatus.SC_OK);}
-    public void userLoginAndCheckStatusCode (User user) {
-
-                 token=given()
+                .post("api/auth/register");}
+    public Response loginUserAPI(User user){
+            return given()
                 .baseUri(baseURL)
                 .header("Content-type", "application/json")
                 .body(user)
                 .when()
-                .post("api/auth/login")
-                .then()
-                .statusCode(HttpStatus.SC_OK)
-                .and().extract().body().path("accessToken");}
-    public void deleteUser(User user){
-        // авторизация пользователя
-        userLoginAndCheckStatusCode (Credentials.userWithoutName);
-        // удаление пользователя
-        given()
+                .post("api/auth/login");
+            }
+
+    public void deleteUserAPI(String token){
+          given()
                 .baseUri(baseURL)
-                .header("Content-type", "application/json")
+                .contentType("application/json")
                 .header("Authorization", token)
-                .body(user)
-                .when()
-                .delete("api/auth/user")
-                .then()
-                .statusCode(HttpStatus.SC_ACCEPTED);
-    }
+                .body(Credentials.user)
+                .delete("api/auth/user");}
+
 }

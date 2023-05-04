@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 public class WebDriverFactory {
     public static WebDriver get(){
         WebDriver driver;
-        String browserName=System.getenv().get("browser");
+        String browserName=System.getProperty("browser");
         switch (browserName){
             case "chrome":
                 driver=new ChromeDriver();

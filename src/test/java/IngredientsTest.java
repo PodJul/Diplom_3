@@ -1,45 +1,21 @@
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import pages.HomePageStellarBurgers;
-import pages.LogInPageStellarBurgers;
-import user.Credentials;
-import user.UserClient;
 import static org.junit.Assert.assertTrue;
 
 public class IngredientsTest extends BaseTest{
 
-    UserClient userClient = new UserClient();
     HomePageStellarBurgers objHomePage;
-    LogInPageStellarBurgers objLogInPage;
-    @Before
-    public void createUser() {
-        userClient.createUserAndCheckStatusCode(Credentials.user);}
-    @After
-    public void deleteUser(){
-        userClient.deleteUser(Credentials.user);}
     @Test
     @DisplayName("Get section with bun")
     public void getBunSection() {
-        objHomePage = new HomePageStellarBurgers(driver);
-        objLogInPage = new LogInPageStellarBurgers(driver);
-        clickLogInButtonOnHomePage();
-        setUserData();
+        objHomePage= new HomePageStellarBurgers(driver);
         clickMenuSauceText();
         clickMenuBunText();
         checkBunTextIsVisible();}
-    @Step("Click LogIn button on home page")
-    public void clickLogInButtonOnHomePage() {
-        objHomePage.clickLogInButton();}
-    @Step("Set user data")
-    public void setUserData() {
-        objLogInPage.waitForLoadLogInPage();
-        objLogInPage.setLogInData(Credentials.fakeEmail, Credentials.fakePassword);}
     @Step("Click menuBunText")
     public void clickMenuBunText() {
-        objHomePage.waitForLoadHomePage();
         objHomePage.clickMenuBunText();}
     @Step("Check BunText is visible")
     public void checkBunTextIsVisible() {
@@ -47,10 +23,7 @@ public class IngredientsTest extends BaseTest{
     @Test
     @DisplayName("Get section with sauce")
     public void getSauceSection() {
-        objHomePage = new HomePageStellarBurgers(driver);
-        objLogInPage = new LogInPageStellarBurgers(driver);
-        clickLogInButtonOnHomePage();
-        setUserData();
+        objHomePage= new HomePageStellarBurgers(driver);
         clickMenuSauceText();
         checkSauceTextIsVisible();}
     @Step("Click menuSauceText")
@@ -63,10 +36,7 @@ public class IngredientsTest extends BaseTest{
     @Test
     @DisplayName("Get section with filling")
     public void getFillingSection() {
-        objHomePage = new HomePageStellarBurgers(driver);
-        objLogInPage = new LogInPageStellarBurgers(driver);
-        clickLogInButtonOnHomePage();
-        setUserData();
+        objHomePage= new HomePageStellarBurgers(driver);
         clickMenuFillingText();
         checkFillingTextIsVisible();}
     @Step("Click menuFillingText")

@@ -10,7 +10,7 @@ public class HomePageStellarBurgers {
     // кнопка "Личный кабинет"
     private final By personalCabinetButton = By.xpath("//div/div//nav//*[@href='/account']");
     // текст "Соберите бургер"
-    private final By homeText = By.xpath(".//*[text()='Соберите бургер']");
+    private final By homeText = By.xpath(".//main/section[1]/h1");
     // кнопка "Войти в аккаунт"
     private final By logInButton = By.xpath(".//button[text()='Войти в аккаунт']");
     // кнопка "Оформить заказ"

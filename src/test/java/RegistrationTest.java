@@ -1,25 +1,19 @@
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
-import org.junit.After;
+import io.restassured.response.Response;
 import org.junit.Test;
 import pages.HomePageStellarBurgers;
 import pages.LogInPageStellarBurgers;
 import pages.RegistrationPageStellarBurgers;
 import user.Credentials;
 import user.UserClient;
-
 import static org.junit.Assert.*;
-
 public class RegistrationTest extends BaseTest {
-
     UserClient userClient=new UserClient();
     HomePageStellarBurgers objHomePage;
     LogInPageStellarBurgers objLogInPage;
     RegistrationPageStellarBurgers objRegistrationPage;
-
-    @After
-    public void deleteUser(){
-        userClient.deleteUser(Credentials.user);}
+    String token;
     @Test
     @DisplayName("Create new user")
     public void createNewUser() {
@@ -30,6 +24,7 @@ public class RegistrationTest extends BaseTest {
         clickRegistrationLink();
         setRegData();
         checkUserHasBeenCreated();
+        deleteUser();
     }
     @Step("Click LogIn button on home page")
     public void clickPersonalCabinetButtonOnHomePage() {
@@ -49,4 +44,9 @@ public class RegistrationTest extends BaseTest {
         objLogInPage.setLogInData(Credentials.fakeEmail, Credentials.fakePassword);
         objHomePage.waitForLoadHomePage();
         assertTrue(objHomePage.isSetOrderButtonVisible());}
+    @Step("Delete user")
+    public void deleteUser(){
+        Response response=userClient.loginUserAPI(Credentials.userWithoutName);
+        token = response.then().extract().path("accessToken");
+        userClient.deleteUserAPI(token);}
     }
