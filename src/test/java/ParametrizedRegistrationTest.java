@@ -1,4 +1,3 @@
-import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,25 +35,12 @@ public class ParametrizedRegistrationTest extends BaseTest {
         objHomePage = new HomePageStellarBurgers(driver);
         objLogInPage = new LogInPageStellarBurgers(driver);
         objRegistrationPage = new RegistrationPageStellarBurgers(driver);
-        clickLogInButtonOnHomePage();
-        clickRegistrationLink();
-        setRegData();
-        getErrorMessage();}
-    @Step("Click LogIn button on home page")
-    public void clickLogInButtonOnHomePage() {
-        objHomePage.clickPersonalCabinetButton();}
-    @Step("Click registration link")
-    public void clickRegistrationLink() {
-         objLogInPage.waitForLoadLogInPage();
-         objLogInPage.clickRegisterLink();
-        }
-    @Step("Set registration data")
-    public void setRegData() {
-         objRegistrationPage.waitForLoadRegPage();
-         objRegistrationPage.setRegistrationData(Credentials.fakeName, Credentials.fakeEmail, password);}
-    @Step("Get error message")
-    public void getErrorMessage() {
-         boolean actual = objRegistrationPage.isWrongPasswordTextVisible();
-         assertEquals(expected, actual);
-    }
+        objHomePage.clickLogInButton();
+        objLogInPage.clickRegistrationLink();
+        objRegistrationPage.waitForLoadRegPage();
+        objRegistrationPage.setRegistrationData(Credentials.fakeName, Credentials.fakeEmail, password);
+        boolean actual = objRegistrationPage.isWrongPasswordTextVisible();
+        assertEquals(expected, actual);}
+
+
 }

@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -32,29 +33,42 @@ public class HomePageStellarBurgers {
     public HomePageStellarBurgers(WebDriver driver) {
         this.driver = driver;
     }
+    @Step("Wait for load home page")
     public void waitForLoadHomePage() {
         new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(homeText));
     }
-    public void clickPersonalCabinetButton() {
-        driver.findElement (personalCabinetButton).click();
-    }
+    @Step("Click logIn button on home page")
     public void clickLogInButton() {
         driver.findElement (logInButton).click();
     }
-    public void clickMenuBunText() {driver.findElement (menuBunText).click();}
+    @Step("Click menu bun text")
+    public void clickMenuBunText() {
+        driver.findElement (menuBunText).click();}
+    @Step("Click menu sauce text")
     public void clickMenuSauceText() {driver.findElement (menuSauceText).click();}
+    @Step("Click menu filling text")
     public void clickMenuFillingText() {driver.findElement (menuFillingText).click();}
+    @Step("Check set order button is visible")
     public boolean isSetOrderButtonVisible() {return driver.findElement(setOrderButton).isDisplayed();}
-    public boolean isingredientsContainerVisible() {
+    @Step("Check ingredients container is visible")
+    public boolean isIngredientsContainerVisible() {
         return driver.findElement(ingredientsContainer).isDisplayed();
     }
+    @Step("Check bun text is visible")
     public boolean isBunTextVisible() {
         return driver.findElement(bunText).isDisplayed();
     }
+    @Step("Check sauce text is visible")
     public boolean isSauceTextVisible() {
         return driver.findElement(sauceText).isDisplayed();
     }
+    @Step("Check filling text is visible")
     public boolean isFillingTextVisible() {
         return driver.findElement(fillingText).isDisplayed();
+    }
+    @Step("Click personal cabinet button on home page")
+    public void clickPersonalCabinetButton() {
+        waitForLoadHomePage();
+        driver.findElement (personalCabinetButton).click();
     }
 }

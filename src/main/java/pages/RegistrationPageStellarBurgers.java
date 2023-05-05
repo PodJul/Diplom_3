@@ -1,8 +1,10 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 public class RegistrationPageStellarBurgers {
     private WebDriver driver;
@@ -23,6 +25,7 @@ public class RegistrationPageStellarBurgers {
     private final By wrongPasswordText = By.xpath("//div/form/fieldset[3]/div/p");
     // ссылка "Войти"
     private final By logInLink = By.xpath("//main/div/div/p/*[@href='/login']");
+    @Step("Wait for load registration page")
     public void waitForLoadRegPage() {
         new WebDriverWait(driver, 10).until(driver -> driver.findElement(regText).isDisplayed());
     }
@@ -38,16 +41,18 @@ public class RegistrationPageStellarBurgers {
     public void clickRegButton() {
         driver.findElement (regButton).click();
     }
-    public void clickLogInLink()  {
-        driver.findElement (logInLink).click();
-    }
+    @Step("Click logIn link")
+    public void clickLogInLink() {
+        waitForLoadRegPage();
+        driver.findElement (logInLink).click();}
+    @Step("Set registration data")
     public void setRegistrationData (String name,String email,String password){
 
         setName(name);
         setEmail(email);
         setPassword(password);
-        clickRegButton();
-    }
+        clickRegButton();}
+    @Step("Check wrong password text is visible ")
     public boolean isWrongPasswordTextVisible(){
         return driver.findElements(wrongPasswordText).size() > 0;
     }

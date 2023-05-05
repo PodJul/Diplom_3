@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -18,19 +19,24 @@ public class PersonalCabinetPageStellarBurgers {
     public PersonalCabinetPageStellarBurgers(WebDriver driver) {
         this.driver = driver;
     }
+    @Step("Wait for load personal cabinet page")
     public void waitForLoadPersonalCabinetPage() {
         new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(profileLink));
     }
+    @Step("Check quit text is visible")
     public boolean isQuitTextVisible() {
         return driver.findElement(quitLink).isDisplayed();
     }
+    @Step("Click constructorButton")
     public void clickConstructorButton() {
-        driver.findElement (constructorButton).click();
-    }
+        waitForLoadPersonalCabinetPage();
+        driver.findElement (constructorButton).click();}
+    @Step("Click logo Stellar Burgers")
     public void clickLogoStellarBurgers() {
-        driver.findElement (logoStellarBurgers).click();
-    }
+        waitForLoadPersonalCabinetPage();
+        driver.findElement (logoStellarBurgers).click();}
+    @Step("Click quit link")
     public void clickQuitLink() {
-        driver.findElement (quitLink).click();
-    }
-}
+        waitForLoadPersonalCabinetPage();
+        driver.findElement (quitLink).click();}
+   }

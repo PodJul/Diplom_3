@@ -1,4 +1,3 @@
-import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import org.junit.After;
@@ -28,79 +27,44 @@ public class UserAuthorizationTest extends BaseTest {
         objLogInPage=new LogInPageStellarBurgers(driver);
         objRegistrationPage=new RegistrationPageStellarBurgers(driver);
         objRecoverPasswordPage=new RecoverPasswordPageStellarBurgers(driver);}
-
+    @After
+    public void deleteUser(){
+    userClient.loginUserAPI(Credentials.userWithoutName);
+    userClient.deleteUserAPI(token);}
     @Test
     @DisplayName("User authorization by logInButton")
-    public void userAuthByLogInButton() {
-        clickLogInButtonOnHomePage();
-        setUserData();
-        checkUserHasBeenAuthorized();
-        deleteUser();
-        }
-
-    @Step("Click LogIn button on home page")
-    public void clickLogInButtonOnHomePage() {
+    public void checkUserAuthByLogInButton() {
         objHomePage.clickLogInButton();
-    }
-    @Step("Set user data")
-    public void setUserData() {
-        objLogInPage.waitForLoadLogInPage();
-        objLogInPage.setLogInData(Credentials.fakeEmail, Credentials.fakePassword);
-        ;}
-    @Step("Check user has been authorized")
-    public void checkUserHasBeenAuthorized() {
+        objLogInPage.setUserData();
         objHomePage.waitForLoadHomePage();
-        assertTrue(objHomePage.isSetOrderButtonVisible());}
-        @Step("Delete user")
-        public void deleteUser(){
-            userClient.loginUserAPI(Credentials.userWithoutName);
-            userClient.deleteUserAPI(token);}
-
+        boolean response=objHomePage.isSetOrderButtonVisible();
+        assertTrue(response);}
     @Test
     @DisplayName("User authorization by personalCabinetButton")
     public void userAuthByPersonalCabinetButton() {
-        clickPersonalCabinetButtonOnHomePage();
-        setUserData();
-        checkUserHasBeenAuthorized();
-        deleteUser();}
-    @Step("Click personalCabinetButton on home page")
-    public void clickPersonalCabinetButtonOnHomePage() {
         objHomePage.clickPersonalCabinetButton();
-    }
+        objLogInPage.setUserData();
+        objHomePage.waitForLoadHomePage();
+        boolean response=objHomePage.isSetOrderButtonVisible();
+        assertTrue(response);}
     @Test
     @DisplayName("User authorization from registration page")
     public void userAuthFromRegPage() {
-
-        clickLogInButtonOnHomePage();
-        clickRegistrationLink();
-        clickLogInLink();
-        setUserData();
-        checkUserHasBeenAuthorized();
-       }
-    @Step("Click registration link")
-    public void clickRegistrationLink() {
-        objLogInPage.waitForLoadLogInPage();
-        objLogInPage.clickRegisterLink();}
-    @Step("Click logIn link")
-    public void clickLogInLink() {
-        objRegistrationPage.waitForLoadRegPage();
-        objRegistrationPage.clickLogInLink();}
+        objHomePage.clickLogInButton();
+        objLogInPage.clickRegistrationLink();
+        objRegistrationPage.clickLogInLink();
+        objLogInPage.setUserData();
+        objHomePage.waitForLoadHomePage();
+        boolean response=objHomePage.isSetOrderButtonVisible();
+        assertTrue(response);}
     @Test
     @DisplayName("User authorization from recoverPassword page")
     public void userAuthFromRecoverPasswordPage() {
-
-        clickLogInButtonOnHomePage();
-        clickRecoverLink();
-        clickGoLink();
-        setUserData();
-        checkUserHasBeenAuthorized();
-        deleteUser();}
-    @Step("Click recover link")
-    public void clickRecoverLink() {
-        objLogInPage.waitForLoadLogInPage();
-        objLogInPage.clickRecoverLink();}
-    @Step("Click go link")
-    public void clickGoLink() {
-        objRecoverPasswordPage.waitForLoadRecoverPasswordPage();
-        objRecoverPasswordPage.clickGoLink();}
-    }
+        objHomePage.clickLogInButton();
+        objLogInPage.clickRecoverLink();
+        objRecoverPasswordPage.clickGoLink();
+        objLogInPage.setUserData();
+        objHomePage.waitForLoadHomePage();
+        boolean response=objHomePage.isSetOrderButtonVisible();
+        assertTrue(response);}
+}

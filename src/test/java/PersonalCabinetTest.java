@@ -1,4 +1,3 @@
-import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import org.junit.After;
@@ -23,81 +22,48 @@ public class PersonalCabinetTest extends BaseTest{
         objHomePage=new HomePageStellarBurgers(driver);
         objLogInPage=new LogInPageStellarBurgers(driver);
         objPersonalCabinetPage=new PersonalCabinetPageStellarBurgers(driver);}
-
-    @Test
-    @DisplayName("Get personal cabinet page")
-    public void getPersonalCabinetPage() {
-         clickLogInButtonOnHomePage();
-         setUserData();
-         clickPersonalCabinetButton();
-         checkGetPersonalCabinetPage();
-         deleteUser();}
-    @Step("Click LogIn button on home page")
-    public void clickLogInButtonOnHomePage() {
-        objHomePage.clickLogInButton();}
-    @Step("Set user data")
-    public void setUserData() {
-        objLogInPage.waitForLoadLogInPage();
-        objLogInPage.setLogInData(Credentials.fakeEmail, Credentials.fakePassword);}
-    @Step("Click personalCabinetButton on home page")
-    public void clickPersonalCabinetButton() {
-        objHomePage.waitForLoadHomePage();
-        objHomePage.clickPersonalCabinetButton();
-       }
-    @Step("Check user get personal cabinet page")
-    public void checkGetPersonalCabinetPage() {
-        objPersonalCabinetPage.waitForLoadPersonalCabinetPage();
-        assertTrue(objPersonalCabinetPage.isQuitTextVisible());}
-    @Step("Delete user")
+    @After
     public void deleteUser(){
         userClient.loginUserAPI(Credentials.userWithoutName);
         userClient.deleteUserAPI(token);}
     @Test
-    @DisplayName("Get constructor from personal cabinet by clicking constructorButton")
-    public void getConstructorPageByConstructorButton() {
-        clickLogInButtonOnHomePage();
-        setUserData();
-        clickPersonalCabinetButton();
-        clickConstructorButton();
-        checkGetConstructor();
-        deleteUser();}
-
-    @Step("Click constructorButton")
-    public void clickConstructorButton() {
+    @DisplayName("Get personal cabinet page")
+    public void checkGetPersonalCabinetPage() {
+        objHomePage.clickLogInButton();
+        objLogInPage.setUserData();
+        objHomePage.clickPersonalCabinetButton();
         objPersonalCabinetPage.waitForLoadPersonalCabinetPage();
-        objPersonalCabinetPage.clickConstructorButton();}
-    @Step("Check user get constructor with ingredients")
-    public void checkGetConstructor() {
+        boolean response=objPersonalCabinetPage.isQuitTextVisible();
+        assertTrue(response);}
+    @Test
+    @DisplayName("Get constructor from personal cabinet by clicking constructorButton")
+    public void checkGetConstructorPageByConstructorButton() {
+        objHomePage.clickLogInButton();
+        objLogInPage.setUserData();
+        objHomePage.clickPersonalCabinetButton();
+        objPersonalCabinetPage.clickConstructorButton();
         objHomePage.waitForLoadHomePage();
-        assertTrue(objHomePage.isingredientsContainerVisible());}
+        boolean response=objHomePage.isIngredientsContainerVisible();
+        assertTrue(response);}
     @Test
     @DisplayName("Get constructor from personal cabinet by clicking logo Stellar Burgers")
     public void getConstructorPageByLogoStellarBurgers() {
-        clickLogInButtonOnHomePage();
-        setUserData();
-        clickPersonalCabinetButton();
-        clickLogoStellarBurgers();
-        checkGetConstructor();
-        deleteUser();}
-    @Step("Click logo Stellar Burgers")
-    public void clickLogoStellarBurgers() {
-        objPersonalCabinetPage.waitForLoadPersonalCabinetPage();
-        objPersonalCabinetPage.clickLogoStellarBurgers();}
+        objHomePage.clickLogInButton();
+        objLogInPage.setUserData();
+        objHomePage.clickPersonalCabinetButton();
+        objPersonalCabinetPage.clickLogoStellarBurgers();
+        objHomePage.waitForLoadHomePage();
+        boolean response=objHomePage.isIngredientsContainerVisible();
+        assertTrue(response);}
     @Test
     @DisplayName("Quit from profile")
-    public void quitFromProfile() {
-        clickLogInButtonOnHomePage();
-        setUserData();
-        clickPersonalCabinetButton();
-        clickQuitLink();
-        checkUserHadQuit();
-        deleteUser();}
-    @Step("Click quit link")
-    public void clickQuitLink() {
-        objPersonalCabinetPage.waitForLoadPersonalCabinetPage();
-        objPersonalCabinetPage.clickQuitLink();}
-    @Step("Check user had quit")
-    public void checkUserHadQuit() {
+    public void checkQuitFromProfile() {
+        objHomePage.clickLogInButton();
+        objLogInPage.setUserData();
+        objHomePage.clickPersonalCabinetButton();
+        objPersonalCabinetPage.clickQuitLink();
         objLogInPage.waitForLoadLogInPage();
-        assertTrue(objLogInPage.isLogoButtonVisible());}
+        boolean response=objLogInPage.isLogoButtonVisible();
+        assertTrue(response);}
+
     }
