@@ -13,6 +13,13 @@ Install the current version from Github:
 git clone https://github.com/PodJul/Diplom_3.git
 ```
 OR you can click button "Code" to download zip.
+
+Create Allure report:
+```bash
+mvn clean test
+mvn allure::serve
+```
+
 ## Contributing
 
 Bug reports and/or pull requests are welcome
